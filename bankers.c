@@ -47,6 +47,8 @@ int main() {
     available[1] = 3;
     available[2] = 2;
 
+    //uncommnt the following lines to get input from user
+
     /*printf("Enter the number of resources: ");
     scanf("%d", &noOfResources);
     printf("Enter the number of processes: ");
@@ -110,4 +112,60 @@ int main() {
         }
         printf("\n");
     }
+
+    int count = 0;
+    int sequence[noOfProcess];
+    int done[noOfProcess];
+    for(int i=0;i<noOfProcess;i++)
+    {
+        done[i]=0;
+    }
+
+    for(int i=0; i<noOfProcess; i++) {
+        for(int j=0; j<noOfProcess; j++) {
+            for(int k=0; k<noOfResources; k++) {
+                if(done[j] == 1) {
+                    break;
+                }
+                if(need[j][k] > available[k]) {
+                    break;
+                }
+                else {
+                    available[k] = available[k] + allocation[j][k];
+                    done[j] = 1;
+                    sequence[count] = j;
+                    count++;
+                }
+            }
+        }
+    }
+
+    for(int i=0; i<noOfProcess; i++) {
+        printf("%d",done[i]);
+    }
+    printf("\n");
+
+    int flag = 0;
+
+    for(int i=0; i<noOfProcess; i++) {
+        if(done[i] == 0) {
+            flag = 1;
+            break;
+        }
+    }
+
+    if(flag == 0) {
+        printf("The system is in safe state.\n");
+        printf("\nSafe sequence is: ");
+        for(int i=0; i<noOfProcess; i++) {
+            printf("P%d ", sequence[i]);
+        }
+    }
+    else {
+        printf("\nThe system is not in safe state.\n");
+    }
+
+    printf("\n");
+
+    return 0;
 }
